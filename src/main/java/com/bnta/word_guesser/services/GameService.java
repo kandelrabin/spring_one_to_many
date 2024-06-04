@@ -2,8 +2,10 @@ package com.bnta.word_guesser.services;
 
 import com.bnta.word_guesser.models.Game;
 import com.bnta.word_guesser.models.Guess;
+import com.bnta.word_guesser.models.Player;
 import com.bnta.word_guesser.models.Reply;
 import com.bnta.word_guesser.repositories.GameRepository;
+import com.bnta.word_guesser.repositories.PlayerRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,15 +20,19 @@ public class GameService {
 
     @Autowired
     GameRepository gameRepository;
+
+    @Autowired
+    PlayerService playerService;
     
-    public Reply startNewGame(){
+    public Reply startNewGame(long playerId){
         String targetWord = wordService.getRandomWord();
         String currentWordStatus = Strings.repeat("*", targetWord.length());
-        Game game = new Game(targetWord, currentWordStatus);
+        Player player = playerService.getPlayerById(playerId).get();
+        Game game = new Game(targetWord, currentWordStatus, player);
         gameRepository.save(game);
         return new Reply(
                 game.getCurrentState(),
-                "Started new game",
+                String.format("Started new game with id: %d", game.getId()),
                 false
         );
     }

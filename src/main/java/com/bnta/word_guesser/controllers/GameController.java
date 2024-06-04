@@ -19,8 +19,8 @@ public class GameController {
     GameService gameService;
 
     @PostMapping
-    public ResponseEntity<Reply> newGame(){
-        Reply reply = gameService.startNewGame();
+    public ResponseEntity<Reply> newGame(@RequestParam long playerId){
+        Reply reply = gameService.startNewGame(playerId);
         return new ResponseEntity<>(reply, HttpStatus.CREATED);
     }
 

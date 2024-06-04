@@ -22,11 +22,18 @@ public class Game {
     @Column(name = "current_state")
     private String currentState;
 
-    public Game(String word, String currentState) {
+    // FOREIGN KEY
+    @ManyToOne
+    @JoinColumn(name = "player_id")
+    private Player player;
+
+
+    public Game(String word, String currentState, Player player) {
         this.word = word;
         this.currentState = currentState;
         this.guesses = 0;
         this.complete = false;
+        this.player = player;
     }
 
     public Game() {
@@ -70,5 +77,13 @@ public class Game {
 
     public void setCurrentState(String currentState) {
         this.currentState = currentState;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
