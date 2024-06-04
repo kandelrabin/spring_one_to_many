@@ -1,5 +1,6 @@
 package com.bnta.word_guesser.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Player {
     private String fullName;
 
     @OneToMany(mappedBy = "player")
+    @JsonIgnoreProperties({"player"})
     private List<Game> games;
 
     public Player(String fullName){

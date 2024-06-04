@@ -1,5 +1,7 @@
 package com.bnta.word_guesser.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -25,6 +27,7 @@ public class Game {
     // FOREIGN KEY
     @ManyToOne
     @JoinColumn(name = "player_id")
+    @JsonIgnoreProperties({"games"}) // ignore the list of games obtained from players. Stops infinite recursion
     private Player player;
 
 

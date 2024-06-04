@@ -23,7 +23,23 @@ public class GameService {
 
     @Autowired
     PlayerService playerService;
-    
+
+    public List<Game> getAllCompletedGames(){
+        return gameRepository.findByCompleteTrue();
+//        List<Game> allGames = this.getAllGames();
+//        List<Game> completedGames = new ArrayList<>();
+//        for(Game game : allGames){
+//            if(game.isComplete()){
+//                completedGames.add(game);
+//            }
+//        }
+//        return completedGames;
+    }
+
+    public List<Game> getAllGames(){
+        return gameRepository.findAll();
+    }
+
     public Reply startNewGame(long playerId){
         String targetWord = wordService.getRandomWord();
         String currentWordStatus = Strings.repeat("*", targetWord.length());
@@ -142,5 +158,6 @@ public class GameService {
     public Optional<Game> getGameById(long id){
         return gameRepository.findById(id);
     }
+
 
 }
